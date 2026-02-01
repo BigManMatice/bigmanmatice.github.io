@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8" />
+    <title>Wil je mijn Valentijn zijn?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: "Segoe UI", sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: white;
+            text-align: center;
+            width: 100vw;
+
+            max-width: 100vw;
+            max-height: 100vh;
+            padding: 0;
+            overflow: visible; /* BELANGRIJK */
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+
+        button {
+            font-size: 1.1rem;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .buttons {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-top: 30px;
+            height: 80px; /* bewegingsruimte */
+        }
+
+
+        .yes {
+            background: #fff;
+            color: #ff4f81;
+        }
+
+        .no {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            position: absolute;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .yes,
+        .no {
+            position: absolute;
+        }
+
+
+    </style>
+</head>
+
+<body class="body">
+<div class="card">
+    <h1>Hey Elle</h1>
+    <p>Wil je mijn Valentijn zijn?</p>
+
+    <div class="buttons">
+        <a href="yes.html"><button class="yes">Ja 💖</button></a>
+        <button class="no" onmouseover="moveNo()" onclick="clickNo()">Nee 😅</button></div>
+
+<script>
+    window.onload = () => {
+        const yes = document.querySelector('.yes');
+        const no = document.querySelector('.no');
+        const buttons = document.querySelector('.buttons');
+
+        const gap = 30;
+
+        // vertical centering
+        const centerY =
+            (buttons.clientHeight - yes.offsetHeight) / 2;
+
+        // total width of both buttons + gap
+        const totalWidth =
+            yes.offsetWidth + gap + no.offsetWidth;
+
+        // start X so the group is centered in the card
+        const startX =
+            (buttons.clientWidth - totalWidth) / 2;
+
+        // YES position
+        yes.style.left = startX + 'px';
+        yes.style.top = centerY + 'px';
+
+        // NO position (right of YES)
+        lastX = startX + yes.offsetWidth + gap;
+        lastY = centerY;
+
+        no.style.left = lastX + 'px';
+        no.style.top = lastY + 'px';
+    };
+
+    function clickNo(){
+        alert("Hoe durf je nee te antwoorden 😭")
+    }
+
+
+
+    let lastX = 0;
+    let lastY = 0;
+
+    function moveNo() {
+        const button = document.querySelector('.no');
+        const card = document.querySelector('.body');
+
+        const maxShift = 80; // hoe ver hij mag bewegen
+        const padding = 10;
+
+        let deltaX = (Math.random() * maxShift * 5) - maxShift;
+        let deltaY = (Math.random() * maxShift * 5) - maxShift;
+
+        let newX = lastX + deltaX;
+        let newY = lastY + deltaY;
+
+        // grenzen binnen de card
+        const maxX = card.clientWidth - button.offsetWidth - padding;
+        const maxY = card.clientHeight - button.offsetHeight - padding;
+
+        newX = Math.max(padding, Math.min(newX, maxX));
+        newY = Math.max(padding, Math.min(newY, maxY));
+
+        lastX = newX;
+        lastY = newY;
+
+        button.style.left = newX + 'px';
+        button.style.top = newY + 'px';
+    }
+</script>
+</div>
+</body>
+</html>
